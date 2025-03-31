@@ -134,8 +134,11 @@ function Header() {
               <h4
                 onMouseEnter={handleMouseEnter}
                 onClick={() => {
-                  window.location.href =
-                    "https://app.triggerx.network/leaderboard";
+                  window.open(
+                    "https://app.triggerx.network/leaderboard",
+                    "_blank",
+                    "noopener,noreferrer"
+                  );
                 }}
                 className={`text-center xl:w-[150px] lg:w-[130px]  lg:text-[12px] xl:text-base ${
                   isActiveRoute("/leaderboard")
