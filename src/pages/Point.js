@@ -18,7 +18,7 @@ const Point = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://data.triggerx.network/api/wallet/${address}/points`
+          `https://data.triggerx.network/api/wallet/points/${address}`
         );
 
         if (!response.ok) {
