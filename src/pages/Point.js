@@ -41,12 +41,21 @@ const Point = () => {
   }, [address]);
 
   const renderDigits = (value, color) => {
-    if (loading) return <span className="animate-pulse">0</span>;
+    if (loading)
+      return Array(5)
+        .fill(0)
+        .map((_, i) => (
+          <span key={i} className="animate-pulse">
+            0
+          </span>
+        ));
     if (error || value === null || value === undefined)
-      return <span className="text-[15px]">22</span>;
+      return Array(1)
+        .fill(0)
+        .map((_, i) => <span key={i}>No Point</span>);
 
-    // Convert to string without padding
-    const digits = String(value);
+    // Convert to string and pad to exactly 5 digits
+    const digits = String(value).padStart(5, "0");
 
     return digits.split("").map((digit, index) => (
       <span key={index} className={`${color}`}>
@@ -68,9 +77,9 @@ const Point = () => {
               <h1 className="text-white text-start text-xl mb-4 tracking-wide">
                 Total Points
               </h1>
-              <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] w-[200px]">
+              <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C]">
                 <div className="flex gap-4 text-4xl font-bold text-white">
-                  {renderDigits(points, "text-white")}
+                  {renderDigits(points?.total_points || 0, "text-white")}
                 </div>
               </div>
             </div>
@@ -80,9 +89,12 @@ const Point = () => {
               <h1 className="text-[#E8FF66] text-xl mb-4 tracking-wide text-start">
                 Boosted Rewards
               </h1>
-              <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] w-[200px]">
+              <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] ">
                 <div className="flex gap-4 text-4xl font-bold text-[#E8FF66]">
-                  {renderDigits(points, "text-[#E8FF66]")}
+                  {renderDigits(
+                    (points?.total_points || 0) * 2,
+                    "text-[#E8FF66]"
+                  )}
                 </div>
               </div>
             </div>
