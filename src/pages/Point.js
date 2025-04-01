@@ -79,7 +79,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C]">
                 <div className="flex gap-4 text-4xl font-bold text-white">
-                  {renderDigits(points?.total_points || 0, "text-white")}
+                  {renderDigits(points, "text-white")}
                 </div>
               </div>
             </div>
@@ -91,10 +91,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] ">
                 <div className="flex gap-4 text-4xl font-bold text-[#E8FF66]">
-                  {renderDigits(
-                    (points?.total_points || 0) * 2,
-                    "text-[#E8FF66]"
-                  )}
+                  {renderDigits(points, "text-[#E8FF66]")}
                 </div>
               </div>
             </div>
@@ -102,13 +99,7 @@ const Point = () => {
 
           <div className="flex justify-center mt-20">
             <button
-              onClick={() => {
-                window.open(
-                  "https://app.triggerx.network/leaderboard",
-                  "_blank",
-                  "noopener,noreferrer"
-                );
-              }}
+              onClick={() => navigate("/leaderboard")}
               className="relative bg-[#222222] text-[#FFFFFF] border border-[#222222] px-6 py-2 sm:px-8 sm:py-3 rounded-full group transition-transform"
             >
               <span className="absolute inset-0 bg-[#222222] border border-[#FFFFFF80]/50 rounded-full scale-100 translate-y-0 transition-all duration-300 ease-out group-hover:translate-y-2"></span>

@@ -154,31 +154,7 @@ function Header() {
           </nav>
         </div>
         <div className="flex items-center">
-          {" "}
           <ConnectButton chainStatus="icon" accountStatus="address" />
-          {/* <div className="relative">
-            <FiInfo
-              className="text-gray-400 hover:text-white cursor-pointer ml-2"
-              size={20}
-              onMouseEnter={() => setShowInfoTooltip(true)}
-              onMouseLeave={() => setShowInfoTooltip(false)}
-            />
-            {showInfoTooltip && (
-              <div className="absolute right-0 mt-2 p-4 bg-[#181818] rounded-xl border border-[#4B4A4A] shadow-lg z-50 w-[280px]">
-                <div className="flex flex-col gap-2 text-sm text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <span>• View only permissions</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span>• Smart contract audit</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span>• Trusted by 418k traders</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div> */}
         </div>
       </div>
       <div className="w-[90%] mx-auto flex justify-between items-center my-10 header sm:flex  lg:hidden md:flex">
