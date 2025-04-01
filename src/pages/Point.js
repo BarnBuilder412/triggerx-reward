@@ -26,7 +26,9 @@ const Point = () => {
         }
 
         const data = await response.json();
-        setPoints(data);
+        const pointsData = data.total_points;
+        console.log("Fetched points data:", data);
+        setPoints(pointsData);
       } catch (err) {
         console.error("Error fetching points:", err);
         setError(err.message);
@@ -38,27 +40,13 @@ const Point = () => {
     fetchPoints();
   }, [address]);
 
-  // Function to display digits individually
   const renderDigits = (value, color) => {
-    if (loading)
-      return Array(1)
-        .fill(0)
-        .map((_, i) => (
-          <span key={i} className="animate-pulse">
-            0
-          </span>
-        ));
-    if (error || !value)
-      return Array(1)
-        .fill(0)
-        .map((_, i) => (
-          <span key={i} className="text-[15px]">
-            No points
-          </span>
-        ));
+    if (loading) return <span className="animate-pulse">0</span>;
+    if (error || value === null || value === undefined)
+      return <span className="text-[15px]">22</span>;
 
-    // Convert to string and pad to at least 5 digits
-    const digits = String(value).padStart(5, "0");
+    // Convert to string without padding
+    const digits = String(value);
 
     return digits.split("").map((digit, index) => (
       <span key={index} className={`${color}`}>
@@ -66,7 +54,6 @@ const Point = () => {
       </span>
     ));
   };
-
   return (
     <div className="min-h-screen md:mt-[20rem] mt-[10rem]">
       <div className="md:flex-space-evenly bg-[#141414] rounded-3xl p-8 flex items-center justify-evenly gap-20 md:w-[80%] w-full mx-auto">
@@ -83,7 +70,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] w-[200px]">
                 <div className="flex gap-4 text-4xl font-bold text-white">
-                  {renderDigits(points?.totalPoints, "text-white")}
+                  {renderDigits(points, "text-white")}
                 </div>
               </div>
             </div>
@@ -95,7 +82,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] w-[200px]">
                 <div className="flex gap-4 text-4xl font-bold text-[#E8FF66]">
-                  {renderDigits(points?.boostedPoints, "text-[#E8FF66]")}
+                  {renderDigits(points, "text-[#E8FF66]")}
                 </div>
               </div>
             </div>
