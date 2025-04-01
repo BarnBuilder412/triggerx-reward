@@ -40,7 +40,7 @@ const Point = () => {
     fetchPoints();
   }, [address]);
 
-  const renderDigits = (value, color) => {
+  const renderDigits = (value, color, isDoubled = false) => {
     if (loading)
       return Array(5)
         .fill(0)
@@ -54,8 +54,11 @@ const Point = () => {
         .fill(0)
         .map((_, i) => <span key={i}>No Point</span>);
 
+    // Double the value if isDoubled is true
+    const displayValue = isDoubled ? value * 2 : value;
+
     // Convert to string and pad to exactly 5 digits
-    const digits = String(value).padStart(5, "0");
+    const digits = String(displayValue).padStart(5, "0");
 
     return digits.split("").map((digit, index) => (
       <span key={index} className={`${color}`}>
@@ -63,6 +66,7 @@ const Point = () => {
       </span>
     ));
   };
+
   return (
     <div className="min-h-screen md:mt-[20rem] mt-[10rem]">
       <div className="md:flex-space-evenly bg-[#141414] rounded-3xl p-8 flex items-center justify-evenly gap-20 md:w-[80%] w-full mx-auto">
@@ -91,7 +95,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] ">
                 <div className="flex gap-4 text-4xl font-bold text-[#E8FF66]">
-                  {renderDigits(points, "text-[#E8FF66]")}
+                  {renderDigits(points, "text-[#E8FF66]", true)}
                 </div>
               </div>
             </div>
