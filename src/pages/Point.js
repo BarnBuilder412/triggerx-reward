@@ -102,7 +102,13 @@ const Point = () => {
 
           <div className="flex justify-center mt-20">
             <button
-              onClick={() => navigate("/leaderboard")}
+              onClick={() => {
+                window.open(
+                  "https://app.triggerx.network/leaderboard",
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+              }}
               className="relative bg-[#222222] text-[#FFFFFF] border border-[#222222] px-6 py-2 sm:px-8 sm:py-3 rounded-full group transition-transform"
             >
               <span className="absolute inset-0 bg-[#222222] border border-[#FFFFFF80]/50 rounded-full scale-100 translate-y-0 transition-all duration-300 ease-out group-hover:translate-y-2"></span>
