@@ -7,8 +7,11 @@ const Point = () => {
   const navigate = useNavigate();
   const { address } = useAccount();
   const [points, setPoints] = useState(null);
+  const [displayPoints, setDisplayPoints] = useState(0);
+  const [displayBoostedPoints, setDisplayBoostedPoints] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   useEffect(() => {
     const fetchPoints = async () => {
@@ -29,6 +32,11 @@ const Point = () => {
         const pointsData = data.total_points;
         console.log("Fetched points data:", data);
         setPoints(pointsData);
+        
+        // Start with 0 and animate to actual value
+        setDisplayPoints(0);
+        setDisplayBoostedPoints(0);
+        setAnimationComplete(false);
       } catch (err) {
         console.error("Error fetching points:", err);
         setError(err.message);
@@ -40,8 +48,38 @@ const Point = () => {
     fetchPoints();
   }, [address]);
 
-  const renderDigits = (value, color, isDoubled = false) => {
-    if (loading)
+  // Animation effect for regular points
+  useEffect(() => {
+    if (points === null || loading || error) return;
+
+    const duration = 1500; // Animation duration in ms
+    const framesPerSecond = 60;
+    const totalFrames = duration / (1000 / framesPerSecond);
+    const pointIncrement = points / totalFrames;
+    
+    let currentFrame = 0;
+    let currentPoints = 0;
+
+    const animationInterval = setInterval(() => {
+      currentFrame++;
+      currentPoints += pointIncrement;
+      
+      if (currentFrame >= totalFrames) {
+        clearInterval(animationInterval);
+        setDisplayPoints(points);
+        setDisplayBoostedPoints(points * 2);
+        setAnimationComplete(true);
+      } else {
+        setDisplayPoints(Math.floor(currentPoints));
+        setDisplayBoostedPoints(Math.floor(currentPoints * 2));
+      }
+    }, 1000 / framesPerSecond);
+
+    return () => clearInterval(animationInterval);
+  }, [points, loading, error]);
+
+  const renderDigits = (value, color, isAnimating) => {
+    if (loading) {
       return Array(5)
         .fill(0)
         .map((_, i) => (
@@ -49,19 +87,28 @@ const Point = () => {
             0
           </span>
         ));
-    if (error || value === null || value === undefined)
+    }
+    
+    if (error || value === null || value === undefined) {
       return Array(1)
         .fill(0)
         .map((_, i) => <span key={i}>No Point</span>);
-
-    // Double the value if isDoubled is true
-    const displayValue = isDoubled ? value * 2 : value;
+    }
 
     // Convert to string and pad to exactly 5 digits
-    const digits = String(displayValue).padStart(5, "0");
+    const digits = String(value).padStart(5, "0");
 
     return digits.split("").map((digit, index) => (
-      <span key={index} className={`${color}`}>
+      <span 
+        key={index} 
+        className={`${color} transition-all duration-300 ${
+          isAnimating ? "transform scale-110" : ""
+        }`}
+        style={{
+          display: "inline-block",
+          animation: isAnimating ? "numberBounce 0.5s ease" : "none"
+        }}
+      >
         {digit}
       </span>
     ));
@@ -69,6 +116,13 @@ const Point = () => {
 
   return (
     <div className="min-h-screen md:mt-[20rem] mt-[10rem]">
+      <style jsx>{`
+        @keyframes numberBounce {
+          0% { transform: translateY(20px); opacity: 0; }
+          60% { transform: translateY(-10px); opacity: 1; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+      `}</style>
       <div className="md:flex-space-evenly bg-[#141414] rounded-3xl p-8 flex items-center justify-evenly gap-20 md:w-[80%] w-full mx-auto">
         {/* Left - 3D Gift Image */}
         <div className="w-1/3 ">
@@ -83,7 +137,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C]">
                 <div className="flex gap-4 text-4xl font-bold text-white">
-                  {renderDigits(points, "text-white")}
+                  {renderDigits(displayPoints, "text-white", !animationComplete)}
                 </div>
               </div>
             </div>
@@ -95,7 +149,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] ">
                 <div className="flex gap-4 text-4xl font-bold text-[#E8FF66]">
-                  {renderDigits(points, "text-[#E8FF66]", true)}
+                  {renderDigits(displayBoostedPoints, "text-[#E8FF66]", !animationComplete)}
                 </div>
               </div>
             </div>
