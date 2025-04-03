@@ -60,7 +60,7 @@ const BoostReward = () => {
                 Grow Your Rewards!
               </h1>
               <p className="text-white leading-relaxed">
-                TriggerX testnet is live on Holeski, and we're boosting rewards!
+                TriggerX testnet is live on Holesky, and we're boosting rewards!
               </p>
               <p className="text-[#F8FF7C]">
                 2x your rewards by registering before April 7th :{" "}
@@ -127,7 +127,7 @@ const BoostReward = () => {
             <div className="bg-[#141414] rounded-2xl text-center p-8">
               <div className=" mx-auto">
                 <p className="text-[#EFEFEF] xl:text-start ml-0 py-2 xs:text-center">
-                  Time Left For Boosted Rewards
+                  Time Left to Signup for Boosted Rewards
                 </p>
                 <div className="flex justify-center gap-2 font-bold  mb-2">
                   <div>

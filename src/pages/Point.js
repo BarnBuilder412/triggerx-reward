@@ -1,40 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import point from "../assets/point.svg";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
-
-// New OdometerDigit component for the animation effect
-const OdometerDigit = ({ value, color }) => {
-  const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const offset = value * 100;
-
-  return (
-    <div className={`relative overflow-hidden w-6 h-10 ${color}`}>
-      <div
-        className="absolute transition-transform duration-700 ease-out"
-        style={{ transform: `translateY(-${offset}%)` }}
-      >
-        {digits.map((digit) => (
-          <div
-            key={digit}
-            className="flex items-center justify-center h-10 font-bold"
-          >
-            {digit}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 const Point = () => {
   const navigate = useNavigate();
   const { address } = useAccount();
   const [points, setPoints] = useState(null);
-  const [displayPoints, setDisplayPoints] = useState([0, 0, 0, 0, 0]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const animationTimeoutRef = useRef(null);
 
   useEffect(() => {
     const fetchPoints = async () => {
@@ -43,8 +17,10 @@ const Point = () => {
 
       try {
         setLoading(true);
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
         const response = await fetch(
-          `https://data.triggerx.network/api/wallet/points/${address}`
+          `${API_BASE_URL}/api/wallet/points/${address}`
         );
 
         if (!response.ok) {
@@ -55,17 +31,6 @@ const Point = () => {
         const pointsData = data.total_points;
         console.log("Fetched points data:", data);
         setPoints(pointsData);
-
-        // Set initial random digits for animation effect
-        const randomDigits = Array(5)
-          .fill(0)
-          .map(() => Math.floor(Math.random() * 10));
-        setDisplayPoints(randomDigits);
-
-        // Start animation after a short delay
-        animationTimeoutRef.current = setTimeout(() => {
-          animateToFinalValue(pointsData);
-        }, 500);
       } catch (err) {
         console.error("Error fetching points:", err);
         setError(err.message);
@@ -75,25 +40,8 @@ const Point = () => {
     };
 
     fetchPoints();
-
-    // Cleanup function
-    return () => {
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
-    };
   }, [address]);
 
-  // Function to animate to the final value
-  const animateToFinalValue = (value) => {
-    if (value === null || value === undefined) return;
-
-    // Convert value to 5 digit string and then to array of numbers
-    const targetDigits = String(value).padStart(5, "0").split("").map(Number);
-    setDisplayPoints(targetDigits);
-  };
-
-  // Existing renderDigits function (unchanged for integration)
   const renderDigits = (value, color, isDoubled = false) => {
     if (loading)
       return Array(5)
@@ -121,32 +69,6 @@ const Point = () => {
     ));
   };
 
-  // New function to render odometer digits
-  const renderOdometerDigits = (value, color, isDoubled = false) => {
-    if (loading)
-      return Array(5)
-        .fill(0)
-        .map((_, i) => (
-          <span key={i} className="animate-pulse">
-            0
-          </span>
-        ));
-
-    if (error || value === null || value === undefined)
-      return Array(1)
-        .fill(0)
-        .map((_, i) => <span key={i}>No Point</span>);
-
-    // Use the current display points for animation
-    const digits = isDoubled
-      ? displayPoints.map((digit) => Math.min(digit * 2, 9))
-      : displayPoints;
-
-    return digits.map((digit, index) => (
-      <OdometerDigit key={index} value={digit} color={color} />
-    ));
-  };
-
   return (
     <div className="min-h-screen md:mt-[20rem] mt-[10rem]">
       <div className="md:flex-space-evenly bg-[#141414] rounded-3xl p-8 flex items-center justify-evenly gap-20 md:w-[80%] w-full mx-auto">
@@ -163,7 +85,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C]">
                 <div className="flex gap-4 text-4xl font-bold text-white">
-                  {renderOdometerDigits(points, "text-white")}
+                  {renderDigits(points, "text-white")}
                 </div>
               </div>
             </div>
@@ -175,7 +97,7 @@ const Point = () => {
               </h1>
               <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] ">
                 <div className="flex gap-4 text-4xl font-bold text-[#E8FF66]">
-                  {renderOdometerDigits(points, "text-[#E8FF66]", true)}
+                  {renderDigits(points, "text-[#E8FF66]", true)}
                 </div>
               </div>
             </div>
