@@ -1,0 +1,36 @@
+/* Odometer.css */
+.odometer-number-container {
+  display: flex; /* Align digits horizontally */
+  align-items: baseline; /* Align digits based on their baseline */
+}
+
+.odometer-digit-wrapper {
+  overflow: hidden;
+  display: inline-block;
+  /* Height should match the line-height or font-size to show only one digit */
+  height: 1em; /* Adjust if needed based on font-size/line-height */
+  line-height: 1em; /* Ensure vertical alignment */
+  vertical-align: middle; /* Align with surrounding text if needed */
+}
+
+.odometer-digit-reel {
+  /* Smooth transition for the transform */
+  transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Example ease */
+  /* transition: transform 0.8s ease-out; */ /* Alternative ease */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center digits horizontally */
+}
+
+.odometer-digit-char {
+  /* Ensure each digit takes up the correct vertical space */
+  height: 1em; /* Match wrapper height and line-height */
+  line-height: 1em; /* Match wrapper height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add gap between digits using the container's gap or margin */
+/* Example using gap on the container: .odometer-number-container { gap: 0.25em; } */
+/* Or add margin to the wrapper: .odometer-digit-wrapper { margin-right: 0.1em; } */
