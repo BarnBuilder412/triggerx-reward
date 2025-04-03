@@ -46,15 +46,15 @@ const BoostReward = () => {
   }, []);
 
   return (
-    <div className="min-h-screen md:mt-[20rem] mt-[10rem]">
+    <div className="min-h-screen lg:mt-[20rem] mt-[10rem]">
       {isConnected ? (
         <Point />
       ) : (
-        <div className="flex p-8 gap-8 text-white max-w-[1600px] mx-auto justify-center md:flex-row">
+        <div className="flex xl:p-8 p-5 gap-8 text-white max-w-[1600px] mx-auto justify-center xs:flex-col-reverse xl:flex-row flex-col-reverse">
           {/* Left Content Section */}
-          <div className="bg-[#141414] rounded-2xl p-12 w-[60%] ">
+          <div className="bg-[#141414] rounded-2xl xl:p-12 px-5 py-8  xl:w-[60%] xs:w-full">
             <div className="mb-8 ">
-              <h1 className="text-4xl  mb-6 tracking-wide">
+              <h1 className="xl:text-4xl text-md mb-6 tracking-wide">
                 Grow the Ecosystem,
                 <br />
                 Grow Your Rewards!
@@ -73,31 +73,31 @@ const BoostReward = () => {
                 Parameters to earn
               </h2>
               <div className="flex flex-col gap-8 text-gray-400">
-                <h4 className="text-md text-white">
+                <h4 className="xl:text-lg md:text-sm text-white">
                   <span className="border border-[#C07AF6] bg-[#C07AF638] px-3 py-2 rounded-lg mr-3">
                     1
                   </span>{" "}
                   Total Active Time
                 </h4>
-                <h4 className="text-md text-white">
+                <h4 className="xl:text-lg text-sm text-white">
                   <span className="border border-[#C07AF6] bg-[#C07AF638] px-3 py-2 rounded-lg mr-3">
                     2
                   </span>{" "}
                   Execution Time
                 </h4>
-                <h4 className="text-md text-white">
+                <h4 className="xl:text-lg text-sm text-white">
                   <span className="border border-[#C07AF6] bg-[#C07AF638] px-3 py-2 rounded-lg mr-3">
                     3
                   </span>{" "}
                   Memory Usage
                 </h4>
-                <h4 className="text-md text-white">
+                <h4 className="xl:text-lg text-sm text-white">
                   <span className="border border-[#C07AF6] bg-[#C07AF638] px-3 py-2 rounded-lg mr-3">
                     4
                   </span>{" "}
                   Static Complexity Size
                 </h4>
-                <h4 className="text-md text-white">
+                <h4 className="xl:text-lg text-sm text-white">
                   <span className="border border-[#C07AF6] bg-[#C07AF638] px-3 py-2 rounded-lg mr-3">
                     5
                   </span>{" "}
@@ -115,46 +115,64 @@ const BoostReward = () => {
                 <img src={reward} alt="" className="" />
               </div>
               <div className="px-8 pb-8">
-                <h1 className="text-4xl font-bold mb-8 tracking-wider">
+                <h1 className="xl:text-4xl xs:text-2xl font-bold mb-8 tracking-wider">
                   Check your Rewards
                 </h1>
 
-                <div className="flex justify-center items-center text-white px-8 py-3 rounded-full">
+                <div className="flex justify-center items-center text-white xl:px-8 px-5 py-3 rounded-full">
                   <ConnectButton chainStatus="none" accountStatus="none" />
                 </div>
               </div>
             </div>{" "}
             <div className="bg-[#141414] rounded-2xl text-center p-8">
               <div className=" mx-auto">
-                <p className="text-[#EFEFEF] text-start ml-0 py-2">
+                <p className="text-[#EFEFEF] xl:text-start ml-0 py-2 xs:text-center">
                   Time Left For Boosted Rewards
                 </p>
-                <div className="flex justify-center gap-2 font-bold text-6xl mb-2">
-                  <span className="bg-[#1a1a1a] px-4 py-2 rounded border-[#6C6C6C] border">
-                    {timeLeft.days.charAt(0)}
-                  </span>
-                  <span className="bg-[#1a1a1a] px-4 py-2 rounded border-[#6C6C6C] border">
-                    {timeLeft.days.charAt(1)}
-                  </span>
-                  <span>:</span>
-                  <span className="bg-[#1a1a1a] px-4 py-2 rounded border-[#6C6C6C] border">
-                    {timeLeft.hours.charAt(0)}
-                  </span>
-                  <span className="bg-[#1a1a1a] px-4 py-2 rounded border-[#6C6C6C] border">
-                    {timeLeft.hours.charAt(1)}
-                  </span>
-                  <span>:</span>
-                  <span className="bg-[#1a1a1a] px-4 py-2 rounded border-[#6C6C6C] border">
-                    {timeLeft.minutes.charAt(0)}
-                  </span>
-                  <span className="bg-[#1a1a1a] px-4 py-2 rounded border-[#6C6C6C] border">
-                    {timeLeft.minutes.charAt(1)}
-                  </span>
-                </div>
-                <div className="flex justify-evenly gap-[3.2rem] text-sm text-gray-400 mt-2">
-                  <span>DAYS</span>
-                  <span>HOURS</span>
-                  <span>MINS</span>
+                <div className="flex justify-center gap-2 font-bold  mb-2">
+                  <div>
+                    <div className="flex gap-2 items-center justify-center">
+                      <span className="bg-[#1a1a1a] xl:px-4 xs:px-3 py-2 px-2 md:px-6 rounded border-[#6C6C6C] border xl:text-6xl xs:text-2xl ">
+                        {timeLeft.days.charAt(0)}
+                      </span>
+                      <span className="bg-[#1a1a1a] xl:px-4 xs:px-3 py-2 px-2 md:px-6 rounded border-[#6C6C6C] border xl:text-6xl xs:text-2xl">
+                        {timeLeft.days.charAt(1)}
+                      </span>
+                      <span>:</span>
+                    </div>
+                    <div className="mt-5">
+                      <p>DAYS</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex gap-2 items-center justify-center">
+                      <span className="bg-[#1a1a1a] xl:px-4 xs:px-3 py-2 px-2 md:px-6 rounded border-[#6C6C6C] border xl:text-6xl xs:text-2xl">
+                        {timeLeft.hours.charAt(0)}
+                      </span>
+                      <span className="bg-[#1a1a1a] xl:px-4 xs:px-3 py-2 px-2 md:px-6 rounded border-[#6C6C6C] border xl:text-6xl xs:text-2xl">
+                        {timeLeft.hours.charAt(1)}
+                      </span>
+                      <span>:</span>
+                    </div>
+                    <div className="mt-5">
+                      <p>HOURS</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex gap-2 items-center justify-center">
+                      <span className="bg-[#1a1a1a] xl:px-4 xs:px-3 py-2 px-2 md:px-6 rounded border-[#6C6C6C] border xl:text-6xl xs:text-2xl">
+                        {timeLeft.minutes.charAt(0)}
+                      </span>
+                      <span className="bg-[#1a1a1a] xl:px-4 xs:px-3 py-2 px-2 md:px-6 rounded border-[#6C6C6C] border xl:text-6xl xs:text-2xl">
+                        {timeLeft.minutes.charAt(1)}
+                      </span>
+                    </div>
+                    <div className="mt-5">
+                      <p>MINS</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
