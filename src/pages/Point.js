@@ -62,11 +62,11 @@ const Point = () => {
   
     return digits.split("").map((digit, index) => {
       const numDigit = parseInt(digit);
-      const offset = -numDigit * 100;
+      const offset = -numDigit * 50;
       const delay = index * 0.2;
       
       return (
-        <div key={index} className="odometer-digit" style={{ height: '45px', overflow: 'hidden' }}>
+        <div key={index} className="odometer-digit" style={{ height: '50px', overflow: 'hidden' }}>
           <div 
             className={`odometer-digit-inner ${color}`} 
             style={{
