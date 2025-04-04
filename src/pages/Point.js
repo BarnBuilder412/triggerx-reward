@@ -55,7 +55,7 @@ const Point = () => {
     if (error || value === null || value === undefined)
       return Array(1)
         .fill(0)
-        .map((_, i) => <span key={i}>No Point</span>);
+        .map((_, i) => <span key={i} className="text-md">No Point</span>);
   
     const displayValue = isDoubled ? value * 2 : value;
     const digits = String(displayValue).padStart(5, "0");
@@ -109,10 +109,14 @@ const Point = () => {
                   Total Points
                 </h1>
                 <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C]">
-                  <div className="flex gap-4 xl:text-4xl text-xl font-bold text-white">
-                    {renderDigits(points, "text-white")}
-                  </div>
-                </div>
+  {points === null || points === undefined || points === 0 ? (
+    <div className="text-white text-xl font-bold font-actayRegular">No Points</div>
+  ) : (
+    <div className="flex gap-4 xl:text-4xl text-xl font-bold text-white">
+      {renderDigits(points, "text-white")}
+    </div>
+  )}
+</div>
               </div>
 
               {/* Right - Boosted Rewards */}
@@ -120,10 +124,14 @@ const Point = () => {
                 <h1 className="text-[#E8FF66] xl:text-xl text-md mb-4 tracking-wide text-start">
                   Boosted Rewards
                 </h1>
-                <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C] ">
-                  <div className="flex gap-4  font-bold text-[#E8FF66] xl:text-4xl text-2xl">
-                    {renderDigits(points, "text-[#E8FF66]", true)}
-                  </div>
+                <div className="bg-[#1A1A1A] rounded-xl px-10 py-6 border border-bg-[#6C6C6C]">
+                  {points === null || points === undefined || points === 0 ? (
+                    <div className="text-[#E8FF66] text-xl font-bold font-actayRegular">No Points</div>
+                  ) : (
+                    <div className="flex gap-4 font-bold text-[#E8FF66] xl:text-4xl text-2xl">
+                      {renderDigits(points, "text-[#E8FF66]", true)}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
-import { getSubdomain } from "./utils/subdomain";
 
 import {
   mainnet,
@@ -86,7 +85,7 @@ const config = getDefaultConfig({
 const queryClient = new QueryClient();
 
 const App = () => {
-  const subdomain = getSubdomain();
+  
 
   return (
     <WagmiProvider config={config}>
