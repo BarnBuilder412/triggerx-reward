@@ -264,7 +264,6 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
-  width: 100%;
+
   will-change: transform, filter, opacity; /* Optimize for animation */
 }

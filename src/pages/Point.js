@@ -63,22 +63,26 @@ const Point = () => {
     return digits.split("").map((digit, index) => {
       const numDigit = parseInt(digit);
       const offset = -numDigit * 100;
-      const delay = index * 0.2; // Staggered animation for each digit
+      const delay = index * 0.2;
       
       return (
-        <div key={index} className="odometer-digit" style={{ height: '100px', overflow: 'hidden' }}>
+        <div key={index} className="odometer-digit" style={{ height: '45px', overflow: 'hidden' }}>
           <div 
             className={`odometer-digit-inner ${color}`} 
             style={{
-              transform: `translateY(${offset}px)`,
+              transform: `translateY(0px)`, // Start from 0 position
               transition: `transform 1.5s ease-out ${delay}s`,
               display: 'flex',
               flexDirection: 'column',
-              animation: `roll 1.5s ease-out ${delay}s` // Add rolling animation
+              animation: `roll 1.5s ease-out ${delay}s`
+            }}
+            onAnimationEnd={(e) => {
+              // After animation completes, set final position
+              e.currentTarget.style.transform = `translateY(${offset}px)`;
             }}
           >
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-              <span key={num} style={{ height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span key={num} style={{ height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {num}
               </span>
             ))}
